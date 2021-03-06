@@ -1,18 +1,26 @@
+# typed: false
+# frozen_string_literal: true
+
+# UniversalCtags
 class UniversalCtags < Formula
   desc "Maintained ctags implementation"
   homepage "https://github.com/universal-ctags/ctags"
+  url "https://github.com/universal-ctags/ctags/archive/p5.9.20201018.0.tar.gz"
+  sha256 "1ec29b2f2fb6eced99181931c3ed28dfe19f56466a43835c783af45dbf7b9e0f"
+  license "GPL-2.0-or-later"
   head "https://github.com/universal-ctags/ctags.git"
-  option "without-xml", "Compile without libxml2"
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "docutils" => [:build, :optional]
   depends_on "pkg-config" => :build
-  depends_on "jansson" => :optional
-  depends_on "libyaml" => :optional
-  conflicts_with "ctags", :because => "this formula installs the same executable as the ctags formula"
+  depends_on "jansson"
+  depends_on "libyaml"
+  uses_from_macos "libxml2"
+  conflicts_with "ctags", because: "this formula installs the same executable as the ctags formula"
 
   def install
     opts = []
+
     opts << "--disable-xml" if build.without? "xml"
     if build.with?("docutils") && OS.linux?
       py_formula = Formula["docutils"].recursive_dependencies.map(&:name).find { |n| n.include?("python") }
