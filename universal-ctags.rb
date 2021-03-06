@@ -11,7 +11,7 @@ class UniversalCtags < Formula
   head "https://github.com/universal-ctags/ctags.git"
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "docutils" => [:build, :optional]
+  depends_on "docutils" => :build
   depends_on "pkg-config" => :build
   depends_on "jansson"
   depends_on "libyaml"
@@ -20,9 +20,7 @@ class UniversalCtags < Formula
 
   def install
     opts = []
-
-    opts << "--disable-xml" if build.without? "xml"
-    if build.with?("docutils") && OS.linux?
+    if OS.linux?
       py_formula = Formula["docutils"].recursive_dependencies.map(&:name).find { |n| n.include?("python") }
       py_ldflags = `#{Formula[py_formula].opt_bin}/python3-config --ldflags`
       opts << "PYTHON_EXTRA_LDFLAGS=#{py_ldflags.chomp}"
@@ -63,6 +61,6 @@ class UniversalCtags < Formula
       }
     EOS
     system "#{bin}/ctags", "-R", "."
-    assert_match /func.*test\.c/, File.read("tags")
+    assert_match(/func.*test\.c/, File.read("tags"))
   end
 end
