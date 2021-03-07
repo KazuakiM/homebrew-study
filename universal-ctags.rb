@@ -18,6 +18,7 @@ class UniversalCtags < Formula
   conflicts_with "ctags", because: "this formula installs the same executable as the ctags formula"
 
   bottle do
+    sha256 arm64_big_sur: "90cbdfd64a241a2153c75aae189494bedb3285ea7c100644fd797fdf0125d99a"
   end
 
   head do
