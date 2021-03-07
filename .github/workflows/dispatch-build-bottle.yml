@@ -1,22 +1,7 @@
 #https://github.com/Homebrew/homebrew-core/blob/master/.github/workflows/dispatch-build-bottle.yml
 #https://github.com/Homebrew/homebrew-core/blob/05a6b958b841ef5804347b516f419d219c9f6e32/.github/workflows/dispatch-build-bottle.yml
+#https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
 name: Dispatch build bottle
-
-on:
-  workflow_dispatch:
-    inputs:
-      macos:
-        description: macOS version
-        required: true
-      formula:
-        description: Formula name
-        required: true
-      issue:
-        description: Issue number, where comment on failure would be posted
-        required: false
-      upload:
-        description: Whether to upload built bottles to Bintray or not
-        required: false
 
 env:
   HOMEBREW_DEVELOPER: 1
@@ -25,7 +10,7 @@ env:
 
 jobs:
   bottle:
-    runs-on: ${{github.event.inputs.macos}}
+    runs-on: 'macos-11.0'
     timeout-minutes: 4320
     env:
       PATH: '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin'
@@ -44,7 +29,7 @@ jobs:
         run: |
           mkdir bottles
           cd bottles
-          brew test-bot --only-formulae ${{github.event.inputs.formula}}
+          brew test-bot --only-formulae universal-ctags
 
       - name: Output brew test-bot --only-formulae failures
         if: always()
