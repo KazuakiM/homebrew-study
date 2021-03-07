@@ -8,14 +8,6 @@ class UniversalCtags < Formula
   url "https://github.com/universal-ctags/ctags/archive/p5.9.20201018.0.tar.gz"
   sha256 "1ec29b2f2fb6eced99181931c3ed28dfe19f56466a43835c783af45dbf7b9e0f"
   license "GPL-2.0-or-later"
-  depends_on "autoconf" => :build
-  depends_on "automake" => :build
-  depends_on "docutils" => :build
-  depends_on "pkg-config" => :build
-  depends_on "jansson"
-  depends_on "libyaml"
-  uses_from_macos "libxml2"
-  conflicts_with "ctags", because: "this formula installs the same executable as the ctags formula"
 
   bottle do
     sha256 arm64_big_sur: "90cbdfd64a241a2153c75aae189494bedb3285ea7c100644fd797fdf0125d99a"
@@ -24,6 +16,15 @@ class UniversalCtags < Formula
   head do
     url "https://github.com/universal-ctags/ctags.git"
   end
+
+  depends_on "autoconf" => :build
+  depends_on "automake" => :build
+  depends_on "docutils" => :build
+  depends_on "pkg-config" => :build
+  depends_on "jansson"
+  depends_on "libyaml"
+  uses_from_macos "libxml2"
+  conflicts_with "ctags", because: "this formula installs the same executable as the ctags formula"
 
   def install
     opts = []
